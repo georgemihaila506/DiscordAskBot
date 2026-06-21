@@ -39,3 +39,28 @@ SYSTEM_PROMPT: str = os.environ.get(
 # Optional dev-guild for instant slash-command sync; None means sync globally.
 _dev_guild_raw = os.environ.get("DEV_GUILD_ID", "").strip()
 DEV_GUILD_ID: int | None = int(_dev_guild_raw) if _dev_guild_raw else None
+
+
+def _int_set(name: str) -> set[int]:
+    """Parse a comma-separated list of ints from an env var (empty -> empty set)."""
+    raw = os.environ.get(name, "").strip()
+    return {int(part) for part in raw.split(",") if part.strip()}
+
+
+# --- Access controls (v2) ---
+# Empty set = allow all servers. Otherwise only these guild ids may use the bot.
+ALLOWED_GUILD_IDS: set[int] = _int_set("ALLOWED_GUILD_IDS")
+# Minimum seconds between a single user's requests (0 = no cooldown).
+USER_COOLDOWN_SECONDS: int = int(os.environ.get("USER_COOLDOWN_SECONDS", "0"))
+
+# --- Conversation memory (v2) ---
+# Max turns (user+assistant messages) kept as context per conversation.
+HISTORY_MAX_MESSAGES: int = int(os.environ.get("HISTORY_MAX_MESSAGES", "8"))
+# Drop a conversation after this many minutes of inactivity.
+MEMORY_TTL_MINUTES: int = int(os.environ.get("MEMORY_TTL_MINUTES", "60"))
+# Cap on stored conversations; oldest are evicted past this.
+MEMORY_MAX_CONVERSATIONS: int = int(os.environ.get("MEMORY_MAX_CONVERSATIONS", "500"))
+
+# --- Persistence (v2) ---
+# Where the daily token budget is persisted so it survives restarts.
+BUDGET_FILE: str = os.environ.get("BUDGET_FILE", "data/budget.json")

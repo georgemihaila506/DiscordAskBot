@@ -1,6 +1,8 @@
 # 0002 — `/ask` slash command is the only interface
 
-- **Status:** Accepted
+- **Status:** Amended by [ADR-0012](0012-reply-to-continue-memory.md) (2026-06-21) —
+  the bot now also listens for replies to its answers; slash commands remain the
+  primary entry point.
 - **Date:** 2026-06-21
 
 ## Context

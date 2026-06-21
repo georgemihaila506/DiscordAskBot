@@ -1,6 +1,6 @@
 # 0003 — Stateless / one-shot (no conversation memory)
 
-- **Status:** Accepted
+- **Status:** Superseded by [ADR-0012](0012-reply-to-continue-memory.md) (2026-06-21)
 - **Date:** 2026-06-21
 
 ## Context

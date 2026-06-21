@@ -27,18 +27,22 @@ async def ask(question: str) -> str:
 
 
 async def stream(
-    question: str, usage: dict[str, int] | None = None
+    question: str,
+    history: list[dict] | None = None,
+    usage: dict[str, int] | None = None,
 ) -> AsyncIterator[str]:
     """Stream Claude's answer, yielding text fragments as they're generated.
 
-    If ``usage`` is provided, it's populated with ``input_tokens`` and
-    ``output_tokens`` once the stream completes (used for budget accounting).
+    ``history`` (prior {role, content} turns) is prepended for multi-turn
+    follow-ups. If ``usage`` is provided, it's populated with ``input_tokens``
+    and ``output_tokens`` once the stream completes (for budget accounting).
     """
+    messages = list(history or []) + [{"role": "user", "content": question}]
     async with _client.messages.stream(
         model=config.MODEL,
         max_tokens=config.MAX_TOKENS,
         system=config.SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": question}],
+        messages=messages,
     ) as response:
         async for text in response.text_stream:
             yield text

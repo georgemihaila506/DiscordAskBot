@@ -29,3 +29,15 @@ Vocabulary for DiscordAskBot — the Discord and Anthropic terms the code leans 
   boundaries (`chunking.py`). Discord hard-caps a message at 2000 characters.
 - **System prompt** — the persona/instructions sent to Claude on every call
   (`SYSTEM_PROMPT`).
+- **Message Content Intent** — a *privileged* gateway intent that lets the bot
+  read the text of messages. Required for reply-to-continue; toggle it on in Dev
+  Portal → Bot → Privileged Gateway Intents.
+- **Reply-to-continue** — replying to one of the bot's answers to ask a follow-up
+  that carries the prior conversation as context (`on_message` + `memory.py`).
+- **Conversation memory** — the in-memory map of answer message id → the
+  conversation that produced it, bounded by a turn window, an idle TTL, and a
+  size cap (`memory.py`).
+- **Allowlist** — the set of server (guild) ids permitted to use the bot
+  (`ALLOWED_GUILD_IDS`; empty = all). See `access.py`.
+- **Cooldown** — a minimum gap enforced between one user's requests
+  (`USER_COOLDOWN_SECONDS`; 0 = off). See `access.py`.

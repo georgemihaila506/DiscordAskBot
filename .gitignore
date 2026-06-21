@@ -1,6 +1,9 @@
 # Secrets — never commit
 .env
 
+# Runtime data (persisted budget, etc.)
+data/
+
 # Python
 __pycache__/
 *.py[cod]

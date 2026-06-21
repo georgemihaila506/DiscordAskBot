@@ -1,0 +1,21 @@
+[project]
+name = "discord-ask-bot"
+version = "0.1.0"
+description = "A Discord bot that answers questions via Anthropic's Claude, exposed as an /ask slash command."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "discord.py>=2.4",
+    "anthropic>=0.40",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+discord-ask-bot = "src.bot:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
